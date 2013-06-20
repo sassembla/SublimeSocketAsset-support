@@ -1,7 +1,8 @@
 SublimeSocketAsset-support
 ==========================
 
-Unity SublimeSocketAsset's FAQ &amp; Issue pages.
+Unity SublimeSocketAsset's FAQ &amp; Issue pages.  
+[SublimeSocketAsset](https://www.assetstore.unity3d.com/#/content/8003)
 
 
 ##FAQ
