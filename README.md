@@ -9,6 +9,7 @@ Unity SublimeSocketAsset's FAQ &amp; Issue pages.
 - - -
 ###Q1.The error "SublimeSocketAsset:error  reason:Unable to connect, as no valid crossdomain policy was found" raise.  
 
+	Maybe project's platform setting is "Web Player Platform".
 	Not support Web Player Platform yet. This will be supported by future version.
 	
 - - -
@@ -26,3 +27,18 @@ Unity SublimeSocketAsset's FAQ &amp; Issue pages.
 |:------------------:|:-:|:-----:|
 |2|SSA 1.0.x or later||
 |3|SSA 1.5.x or later|SSA 1.5.x or later|
+
+###Q4.Disconnect per one key-input in Sublime Text.
+
+	Please delete "Asset/SublimeSocketAsset/Preferences.txt" first.
+	Then connect again.
+	
+	If does not improvement,　please contact or open issue.
+	
+###Online Support
+Let's issue,, but, if won't,
+
+please contact   
+[https://twitter.com/sassembla](https://twitter.com/sassembla)
+or
+[sassembla@mac.com](mailto:sassembla@mac.com)
