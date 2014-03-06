@@ -38,6 +38,19 @@ Unity SublimeSocketAsset's FAQ &amp; Issue pages.
 ###Online Support
 Let's issue,, but, if won't,
 
+fill the check list below
+
+**checklist:**
+
+1. Unity version : Unity ~
+2. Platform: Win7,8.x, or Mac OS X 10.x.x
+3. Sublime Text version: Version 2.x.x or 3.x.x 
+4. Save -> Compile is working?: y/n
+5. Show Error/Caution is working?: y/n
+6. Run Completion is enabled and working?: y/n
+
+then 
+
 please contact   
 [https://twitter.com/sassembla](https://twitter.com/sassembla)
 or
