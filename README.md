@@ -35,6 +35,54 @@ Unity SublimeSocketAsset's FAQ &amp; Issue pages.
 	
 	If does not improvement,　please contact or open issue.
 	
+###Q5. Completion never run.
+
+	SublimeSocketAsset covered Unity's default coding style only.
+	like below:
+	
+	using UnityEngine;
+	using System.Collections;
+
+	public class Something : MonoBehaviour {
+
+
+		// Use this for initialization
+		void Start () {
+		
+		}
+	
+		// Update is called once per frame
+		void Update () {
+	
+		}
+	}
+	
+	The other case like below, will not work fine.
+	
+	using UnityEngine;
+	using System.Collections;
+
+	public class Something : MonoBehaviour 
+	{
+
+
+		// Use this for initialization
+		void Start () 
+		{
+			
+		}
+	
+		// Update is called once per frame
+		void Update () 
+		{
+		
+		}
+	}
+
+	We will fix it for next update.
+	
+
+
 ###Online Support
 Let's issue,, but, if won't,
 
