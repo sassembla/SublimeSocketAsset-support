@@ -14,7 +14,9 @@ Unity SublimeSocketAsset's FAQ &amp; Issue pages.
 	
 - - -
 ###Q2.Cannot start Unity-build from SublimeText.
-	It's the SSA version 1.3.x's bug.  
+
+	FIXED:It's the SSA version 1.3.x's bug.  
+	
 	You should set YOUR_PROJECT/Assets/SublimeSocketAsset/Editor/Exec/SwitchApp as "Executable" manually. 
 	
 	chmod 744 YOUR_PROJECT/Assets/SublimeSocketAsset/Editor/Exec/SwitchApp
@@ -37,6 +39,8 @@ Unity SublimeSocketAsset's FAQ &amp; Issue pages.
 	
 ###Q5. Completion never run.
 
+	FIXED:It's the SSA version 1.7.x's bug.
+	
 	SublimeSocketAsset covered Unity's default coding style only.
 	like below:
 	
