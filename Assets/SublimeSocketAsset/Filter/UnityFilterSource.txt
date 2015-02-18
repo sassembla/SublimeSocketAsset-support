@@ -1,0 +1,616 @@
+// version 2.0.0
+
+ss@changeIdentity: {
+    "to": "unitysocket"
+}->setEventReactor: {
+    "target": "countup",
+    "react": "event_countup",
+    "reactors": [
+        {
+            "countUp": {
+                "label": "compiling",
+                "default": 0,
+                "selectors": [
+                    {
+                        "transform<-count": {
+                            "code": "
+                            count = inputs[\"count\"]\n
+                            count = count % 10\n
+                            message = \"Unity compiling +\" + count * \"+\"\n
+                            output({\"message\":message})
+                            ",
+                            "selectors": [
+                                {
+                                    "showStatusMessage<-message": {}
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}->defineFilter: {
+    "name": "unity",
+    "filters": [
+        {
+            // Unity error
+            "(.*)[(]([0-9].*?),.*[)]: error .*: (.*)": {
+                "injects": {
+                    "groups[0]": "name",
+                    "groups[1]": "line",
+                    "groups[2]": "reason"
+                },
+                "selectors": [
+                    {
+                        "showAtLog<-name, line, reason": {
+                            "format": "ERROR: on [name]:[line] [reason]"
+                        }
+                    },
+                    {
+                        "appendRegion<-name, line, reason": {
+                            "format": "ERROR: [reason]",
+                            "condition": "keyword"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            // Unity warning
+            "^(.*)[(]([0-9].*?),.*[)][:] warning .*: (.*)": {
+                "injects": {
+                    "groups[0]": "name",
+                    "groups[1]": "line",
+                    "groups[2]": "reason"
+                },
+                "selectors": [
+                    {
+                        "showAtLog<-name, line, reason": {
+                            "format": "WARNING: on [name]:[line] [reason]"
+                        }
+                    },
+                    {
+                        "appendRegion<-name, line, reason": {
+                            "format": "WARNING: [reason]",
+                            "condition": "string"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            // Unity monobehaviour generation error.
+            "^(You are trying to create a MonoBehaviour using the 'new' keyword.*?)\n.*?at (.*?):([0-9].*?)[)]": {
+                "injects": {
+                    "groups[0]": "reason",
+                    "groups[1]": "name",
+                    "groups[2]": "line"
+                },
+                "selectors": [
+                    {
+                        "showAtLog<-name, line, reason": {
+                            "format": "[reason] at [name]:[line]"
+                        }
+                    },
+                    {
+                        "appendRegion<-name, line, reason": {
+                            "format": "ERROR: [reason]",
+                            "condition": "keyword"
+                        }
+                    }
+                ],
+                "dotall": true
+            }
+        },
+        {
+            // transform.position assign attempt for 'SAMPLEOBJECT' is not valid. Input position is { Infinity, 0.000000, 0.000000 }.
+            // UnityEngine.Transform:INTERNAL_set_position(Vector3&)
+            // UnityEngine.Transform:set_position(Vector3)
+            // SAMPLEOBJECT:Awake() (at Assets/SAMPLEOBJECT.cs:100)
+            "^transform.position assign attempt for ['](.*?)['] is not valid. (.*?)\n.*?at (.*?):([0-9].*?)[)]": {
+                "injects": {
+                    "groups[0]": "reason1",
+                    "groups[1]": "reason2",
+                    "groups[2]": "name",
+                    "groups[3]": "line"
+                },
+                "selectors": [
+                    {
+                        "showAtLog<-reason1, reason2, name, line": {
+                            "format": "transform.position assign attempt for [reason1] is not valid. [reason2], at [name]:[line]"
+                        }
+                    },
+                    {
+                        "appendRegion<-reason1, reason2, name, line": {
+                            "format": "ERROR: transform.position assign attempt for [reason1] is not valid. [reason2], at [name]:[line]",
+                            "condition": "keyword"
+                        }
+                    }
+                ],
+                "dotall": true
+            }
+        },
+        {
+            // Find can only be called from the main thread.
+            // Constructors and field initializers will be executed from the loading thread when loading a scene.
+            // Don't use this function in the constructor or field initializers, instead move initialization code to the Awake or Start function.
+            "^(.*?) can only be called from the main thread[.]": {
+                "injects": {
+                    "groups[0]": "causeObject"
+                },
+                "selectors": [
+                    {
+                        "showAtLog<-causeObject": {
+                            "format": "[causeObject] can only be called from the main thread."
+                        }
+                    }
+                ]
+            }
+        },
+        {   
+            // ArgumentNullException, UnityException, IndexOutOfRangeException, InvalidOperationException, DivideByZeroException, 
+            // NullReferenceException, FormatException, KeyNotFoundException
+
+            // WILDCARDException: REASON
+            // Parameter name: source
+            // System.Linq.Check.Source (System.Object source)
+            // System.Linq.Enumerable.First[Target] (IEnumerable`1 source)
+            // SAMPLEOBJECT.SAMPLEMETHOD () in SAMPLEOBJECT:100)
+            "((ArgumentNull|Unity|IndexOutOfRange|InvalidOperation|DivideByZero|NullReference|Format|KeyNotFound)Exception: .*?)\n.*? in [/](.*?):([0-9].*?)( |\n)": {
+                "injects": {
+                    "groups[0]": "exception",
+                    "groups[2]": "name",
+                    "groups[3]": "line"
+                },
+                "selectors": [
+                    {
+                        "showAtLog<-exception, name, line": {
+                            "message": "[exception] at /[name]:[line]"
+                        }
+                    },
+                    {
+                        "appendRegion<-exception, name, line": {
+                            "format": "ERROR: [exception]",
+                            "condition": "keyword"
+                        }
+                    }
+                ],
+                "dotall": true
+            }
+        },
+        {
+            "^- starting compile": {
+                "selectors": [
+                     {
+                        "eventEmit": {
+                            "target": "countup",
+                            "event": "event_countup"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "^Compilation failed:(.*)": {
+                "injects": {
+                    "groups[0]": "reason"
+                },
+                "selectors": [
+                    // {
+                    //     "eventEmit": {
+                    //         "target": "compileFailed",
+                    //         "event": "event_compilefailed"
+                    //     }
+                    // },
+                    {
+                        "showAtLog<-reason": {
+                            "format": "Unity compile failed: [reason]"
+                        }
+                    },
+                    {
+                        "showStatusMessage<-reason": {
+                            "format": "Unity compile failed: [reason]"
+                        }
+                    },
+                    {
+                        "monocastMessage": {
+                            "target": "unitysocket",
+                            "message": "compiled:failed"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "(^Mono: successfully reloaded assembly\n- Completed reload, in  ([0-9].*?) seconds)": {
+                "injects": {
+                    "groups[1]": "time"
+                },
+                "selectors": [
+                    {
+                        "showStatusMessage<-time": {
+                            "format": "Unity compile succeeded: in [time] seconds"
+                        }
+                    },
+                    {
+                        "showAtLog<-time": {
+                            "format": "Unity compile succeeded: in [time] seconds"
+                        }
+                    },
+                    {
+                        "monocastMessage": {
+                            "target": "unitysocket",
+                            "message": "compiled:succeeded"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "^L:(.*?)UnityEngine.*?[(]at (.*?):([0-9].*?)[)]": {
+                "injects": {
+                    "groups[0]": "message",
+                    "groups[1]": "name",
+                    "groups[2]": "line"
+                },
+                "selectors": [
+                    {
+                        "appendRegion<-name, line, message": {
+                            "condition": "constant.language"
+                        }
+                    }
+                ],
+                "dotall": true
+            }
+        },
+
+
+        // shader error & warning
+        {
+            // Shader error in 'Custom/TestShader': Program 'SurfShaderInternalFunc', undefined variable "printf" at line 25
+            // Shader error in 'Custom/TestShader': Parse error: syntax error at line 9
+            "Shader error in [']Custom/(.*?)[']: (.*) at line ([0-9].*)": {
+                "injects": {
+                    "groups[0]": "name",
+                    "groups[1]": "message",
+                    "groups[2]": "line"
+                },
+                "selectors": [
+                    {
+                        "showAtLog<-message": {
+
+                        }
+                    },
+                    {
+                        "appendRegion<-name, line, message": {
+                            "condition": "keyword"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            // Shader error in 'Custom/TestShader': No 
+            "Shader error in [']Custom/(.*?)[']: No (.*)": {
+                "injects": {
+                    "groups[0]": "name",
+                    "groups[1]": "message"
+                },
+                "selectors": [
+                    {
+                        "showAtLog<-message": {
+
+                        }
+                    },
+                    {
+                        "appendRegion<-name, message": {
+                            "line": 1,
+                            "condition": "keyword"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            // warning in runtime. line base will not be match. set to Line:1 forcely.
+            // Shader warning in 'Custom/TestShader': GLSL vertex shader: 403: ERROR: '[' :  array index out of range '20' at line 9
+            // Shader warning in 'Custom/TestShader': Program 'frag_surf', array index out of bounds (compiling for d3d11_9x) at line 7
+            "Shader warning in [']Custom/(.*)[']: (.*)": {
+                "injects": {
+                    "groups[0]": "name",
+                    "groups[1]": "message"
+                },
+                "selectors": [
+                    {
+                        "showAtLog<-message": {
+
+                        }
+                    },
+                    {
+                        "appendRegion<-name, message": {
+                            "line": 1,
+                            "condition": "keyword"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            // assertion
+            "A:(.*?):([0-9].*?):(.*)": {
+                "injects": {
+                    "groups[0]": "name",
+                    "groups[1]": "line",
+                    "groups[2]": "message"
+                },
+                "selectors": [
+                    {
+                        "appendRegion<-name, line, message": {
+                            "condition": "keyword"
+                        }
+                    }
+                ]
+            }
+        }
+
+    ]
+}->defineFilter: {
+    "name": "quickfix",
+    "filters": [
+        {
+            // open the view that have error or warning. via current view.
+            "^open:.* @locate (.*) @to .*": {
+                "injects": {
+                    "groups[0]": "targetViewName"
+                },
+                "selectors": [
+                    {
+                        "viewEmit<-targetViewName": {
+                            "name": "ss_viewkey_current",
+                            "injects": {
+                                "targetViewName": "targetViewName"
+                            },
+                            "selectors": [
+                                {
+                                    "transform<-path, targetViewName": {
+                                        "code": "
+                                            import os\n
+                                            samplePath = inputs[\"path\"]\n
+                                            targetViewName = inputs[\"targetViewName\"]\n
+
+                                            samplePath_AssetBased = samplePath.split(\"Assets\")[0]\n
+
+                                            # get asset-phrase from current file's path.\n
+
+                                            path = os.path.join(samplePath_AssetBased, targetViewName)\n
+
+                                            output({\"path\":path})
+                                        ",
+                                        "selectors": [
+                                            {
+                                                "openFile<-path": {}
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            // Expecting A
+            // add 'expect' string to the end of the line.
+            "(.*) Expecting `(.*)'.*@to ([0-9].*?) .*@on (.*)": {
+                "injects": {
+                    "groups[1]": "injective-add",
+                    "groups[2]": "injective-to",
+                    "groups[3]": "injective-name"
+                },
+                "selectors": [
+                    {
+                        "transform<-injective-add, injective-to, injective-name": {
+                            "code": "
+                                name = inputs[\"injective-name\"]\n
+                                add = inputs[\"injective-add\"]\n
+                                to = inputs[\"injective-to\"]\n
+
+                                output({\"name\":name, \"add\":add, \"to\":to})",
+                            "selectors": [
+                                {
+                                    "showToolTip<-name, add, to": {
+                                        "injects": {
+                                            "name": "name",
+                                            "add": "add",
+                                            "to": "to"
+                                        },
+                                        "onselected": [
+                                            {
+                                                "fix:add required": [
+                                                    {
+                                                        "modifyView<-name, add, to": {
+                                                            
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "oncancelled": [
+                                            
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "(.*)": {
+                "injects": {
+                    "groups[0]": "message"
+                },
+                "selectors": [
+                    {
+                        "showAtLog<-message": {}
+                    }
+                ]
+            }
+        }
+    ]
+}->setViewReactor: {
+    "react": "on_selection_modified",
+    "delay": 500,
+    "reactors": [
+        {
+            "selectedRegions<-name, selecteds": {
+                "selectors":[
+                    {
+                        "generate filtring source for quickfix/transform<-path, crossed, messages, to, line": {
+                            "code": "
+                            
+                            import os\n
+                            name = os.path.basename(inputs[\"path\"])\n
+                            
+                            onselected = []\n
+                            messages = inputs[\"messages\"]\n
+
+                            to = inputs[\"to\"]\n
+
+                            line = inputs[\"line\"]\n
+                            
+                            for message in messages:\n
+                                \tselector = []\n
+                                \tfilteringContents = {\"name\":\"quickfix\", \"source\":message+\" @to \"+str(to)+\"  @line \"+str(line)+\" @on \"+name}\n
+                                \tfilteringAPI = {\"filtering\":filteringContents}\n
+
+                                \tselector.append(filteringAPI)\n
+                                \ttooltipItem = {}\n
+                                \ttooltipItem[message] = selector\n
+                                \tonselected.append(tooltipItem)\n
+
+                            output({\"name\":name, \"onselected\":onselected, \"message\": messages[0]})\n",
+
+                            "selectors": [
+                                {
+                                    "clearSelection<-name": {
+
+                                    }
+                                },
+                                {
+                                    "afterAsync<-name, onselected": {
+                                        "identity": "waitForClearSelection",
+                                        "ms": 100,
+                                        "selectors": [
+                                            {
+                                                "showToolTip<-name, onselected": {
+                                                    "oncancelled": [
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}->setViewReactor: {
+    "react": "on_post_save",
+    "reactors": [
+        {
+            "resetCounts": {
+                "label": "compiling"
+            }
+        },
+        {
+            "eraseAllRegions<-name": {
+                
+            }
+        },
+        {
+            "monocastMessage": {
+                "target": "unitysocket",
+                "message": "saved"
+            }
+        },
+        {
+            "eventEmit": {
+                "target": "countup",
+                "event": "event_countup"
+            }
+        }
+    ]
+}->setViewReactor: {
+    "react": "ss_v_increased",
+    "reactors": [
+        // do nothing
+    ]
+}->setViewReactor: {
+    "react": "ss_v_decreased",
+    "reactors": [
+        {
+            "cancelCompletion<-name": {
+            }
+        }
+    ]
+}->the completion/setViewReactor: {
+    "react": "on_modified",
+    "reactors": [
+        {
+            "viewEmit<-name, identity": {
+                "injects": {
+                    "identity": "identity"
+                },
+                "selectors": [
+                    {
+                        "monocastMessage<-identity, rowcol, path, body": {
+                            "target": "unitysocket",
+                            "format": "completion:[identity]:[rowcol]:[path]:[body]"
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}->show errors when the view is not opene./setViewReactor: {
+    "react": "ss_f_noViewFound",
+    "injects": {
+        "name": "targetViewName",
+        "message": "reason"
+    },
+    "reactors": [
+        {
+            "appendRegion<-targetViewName, reason": {
+                "format": "open:[reason] @locate [targetViewName]",
+                "name": "ss_viewkey_current",
+                "line": 1,
+                "condition": "constant.language"
+            }
+        }
+    ]
+}->send view data to client./getViewSetting: {
+    "name": "ss_viewkey_current",
+    "selectors": [
+        {
+            "monocastMessage<-indentationsize, usingspace": {
+                "target": "unitysocket",
+                "format": "setting:[indentationsize]:[usingspace]"
+            }
+        }
+    ]
+}
+
+
+->showStatusMessage: {
+    "message": "connection established between Unity to SublimeText."
+}->showAtLog: {
+    "message": "connection established between Unity to SublimeText."
+}
+

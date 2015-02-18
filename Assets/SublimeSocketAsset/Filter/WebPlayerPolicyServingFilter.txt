@@ -1,0 +1,37 @@
+// domain policy server for Unity Web Player-mode Editor.
+// usage: 
+//  1.  super + shift + p -> SublimeSocket on
+//  2.  super + shift + p -> SublimeSocket runSushiJSON -> paste this file's path, then Enter.
+// 
+
+afterAsync: {
+    "identity": "addTransfer",
+    "ms": 1,
+    "selectors":[
+        {
+            "addTransfer": {
+                "transferIdentity": "byteDataServer",
+                "connectionIdentity": "byteDataConnection",
+                "protocol": "ByteDataServer",
+                "params":{
+                    "binders": [
+                        {
+                            // allow all domain.
+                            "<policy-file-request/>":"<?xml version=\"1.0\"?><cross-domain-policy><allow-access-from domain=\"*\" to-ports=\"*\"/></cross-domain-policy>"
+                        }
+                    ],
+                    "host": "127.0.0.1",
+                    "port": 8824
+                },
+                "selectors": [
+                    {
+                        "showAtLog<-transferIdentity": {
+                            "format": "transfer [transferIdentity] added."
+                        }
+                    }
+                
+                ]
+            }
+        }
+    ]
+}
