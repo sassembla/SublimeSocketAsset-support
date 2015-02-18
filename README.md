@@ -1,8 +1,13 @@
-SublimeSocketAsset-support
-==========================
+#SublimeSocketAsset-support
+
 
 Unity SublimeSocketAsset's FAQ &amp; Issue pages.  
 [SublimeSocketAsset](https://www.assetstore.unity3d.com/#/content/8003)
+
+##Free sample
+ver 2.0 is in review now. 2015/02/18
+free (limited) version is below.
+[Sample](https://github.com/sassembla/SublimeSocketAsset-support/tree/master/Assets/SublimeSocketAsset)
 
 
 ##FAQ
