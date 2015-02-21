@@ -12,7 +12,13 @@ This Asset requires below.
  
 * SublimeSocket :The plugin for Sublime Text.
 
-* SublimeSocketAsset (thisx)
+* SublimeSocketAsset (this)
+
+###Limitation
+SublimeSocketAsset uses Unity Editor's Auto Refresh function.
+
+please check,  
+Unity Editor > Preferences > General > Auto Refresh is enabed.
 
 
 ###Supported Sublime Text / OS
