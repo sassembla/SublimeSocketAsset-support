@@ -4,10 +4,11 @@
 Unity SublimeSocketAsset's FAQ &amp; Issue pages.  
 [SublimeSocketAsset](https://www.assetstore.unity3d.com/#/content/8003)
 
-##Free sample
-ver 2.0 is in review now. 2015/02/18
-free (limited) version is below.
-[Sample](https://github.com/sassembla/SublimeSocketAsset-support/tree/master/Assets/SublimeSocketAsset)
+
+
+##Free version
+free (limited) SublimeSocketAsset version 2.0.1 is below.  
+[Assets/SublimeSocketAsset](https://github.com/sassembla/SublimeSocketAsset-support/tree/master/Assets/SublimeSocketAsset)
 
 
 ##FAQ
@@ -89,8 +90,13 @@ free (limited) version is below.
 	}
 
 	We will fix it for next update.
-	
 
+	
+###Q6.compile does not start
+	
+	SublimeSocketAsset depends on Unity Editor's Auto Refresh setting.
+
+	ensure that setting is enabled.
 
 ###Online Support
 Let's issue,, but, if won't,
