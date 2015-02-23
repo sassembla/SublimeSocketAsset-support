@@ -18,8 +18,17 @@ This Asset requires below.
 SublimeSocketAsset uses Unity Editor's Auto Refresh function.
 
 please check,  
-Unity Editor > Preferences > General > Auto Refresh is enabed.
+Unity Editor > Preferences > General > Auto Refresh is enabled.
 
+
+###Free version limitation
+
+* only work for Sublime Text 3.
+* completion limited only UnityEngine.dll's class.
+* all codes are not editable. in Asset Store version, you can edit all codes (except json, ws, UniRx, NRefactory dlls.)
+
+please test free version:
+[https://github.com/sassembla/SublimeSocketAsset-support](https://github.com/sassembla/SublimeSocketAsset-support)
 
 ###Supported Sublime Text / OS
 

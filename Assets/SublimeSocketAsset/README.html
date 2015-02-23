@@ -326,17 +326,17 @@ sup {
 <p>SublimeSocketAsset uses Unity Editor&#39;s Auto Refresh function.</p>
 
 <p>please check,<br>
-Unity Editor &gt; Preferences &gt; General &gt; Auto Refresh is enabed.</p>
+Unity Editor &gt; Preferences &gt; General &gt; Auto Refresh is enabled.</p>
 
 <h3 id="toc_4">Free version limitation</h3>
 
 <ul>
 <li>only work for Sublime Text 3.</li>
-<li>completion contains only UnityEngine.dll&#39;s class only.</li>
+<li>completion limited only UnityEngine.dll&#39;s class.</li>
 <li>all codes are not editable. in Asset Store version, you can edit all codes (except json, ws, UniRx, NRefactory dlls.)</li>
 </ul>
 
-<p>please test this with free version:<br>
+<p>please test free version:
 <a href="https://github.com/sassembla/SublimeSocketAsset-support">https://github.com/sassembla/SublimeSocketAsset-support</a></p>
 
 <h3 id="toc_5">Supported Sublime Text / OS</h3>
@@ -391,23 +391,25 @@ chosse <strong>&quot;connect&quot;</strong><br>
 or<br>
 <strong>[Play] your Project.</strong></p>
 
-<h3 id="toc_8">Another version of Sublime Text</h3>
+<h3 id="toc_8">Sublime Text 3 beta support [experimental]</h3>
 
-<p>By default, Sublime Text 3 is now supported by SublimeSocketAsset version 1.5.x or later.  </p>
-
-<p>but you can change it by below.</p>
+<p>Sublime Text 3 is now supported by SublimeSocketAsset version 1.5.x or later.<br>
+But not yet default setting.  </p>
 
 <p>1.
 Open Asset/SublimeSocketAsset/Editor/Scripts/UnitySublimeSocketClient.cs
 2.
 Search the below line.  </p>
 
-<pre><code>    public static readonly string SublimeTextVersion = &quot;3&quot;;</code></pre>
+<pre><code>    public static readonly string SublimeTextVersion = &quot;2&quot;;</code></pre>
 
 <p>3.
-Change the number.  </p>
+Change the number to &quot;3&quot;.  </p>
 
-<pre><code>    public static readonly string SublimeTextVersion = &quot;N&quot;;</code></pre>
+<pre><code>    public static readonly string SublimeTextVersion = &quot;3&quot;;</code></pre>
+
+<p>Note that Windows7/8 has no notification function.<br>
+The notification function for Windows8 is in the plan.</p>
 
 <h3 id="toc_9">Compile &amp; Show errors on SublimeText</h3>
 
