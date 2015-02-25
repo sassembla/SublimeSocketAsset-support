@@ -330,7 +330,16 @@ sup {
 <p>please check,<br>
 Unity Editor &gt; Preferences &gt; General &gt; Auto Refresh is enabled.</p>
 
-<h3 id="toc_4">Free version limitation</h3>
+<h3 id="toc_4">Mac OS X Yosemite,</h3>
+
+<p>The Application which is out of focus will slow down forcely. This causes Unity Editor&#39;s tick speed down too.<br>
+SublimeSocketAsset depends on Unity Editor, because of that completion function will speed down too.  </p>
+
+<p>Unity Editor&#39;s tick speed will regain when you &quot;Save&quot; your code with SublimeSocketAsset. but will slow down again. </p>
+
+<p>We&#39;ll solve this problem version in ver 2.1.x </p>
+
+<h3 id="toc_5">Free version limitation</h3>
 
 <ul>
 <li>only work for Sublime Text 3.</li>
@@ -341,7 +350,7 @@ Unity Editor &gt; Preferences &gt; General &gt; Auto Refresh is enabled.</p>
 <p>please test free version:
 <a href="https://github.com/sassembla/SublimeSocketAsset-support">https://github.com/sassembla/SublimeSocketAsset-support</a></p>
 
-<h3 id="toc_5">Supported Sublime Text / OS</h3>
+<h3 id="toc_6">Supported Sublime Text / OS</h3>
 
 <table>
 <thead>
@@ -366,7 +375,7 @@ Unity Editor &gt; Preferences &gt; General &gt; Auto Refresh is enabled.</p>
 </tbody>
 </table>
 
-<h3 id="toc_6">Installation</h3>
+<h3 id="toc_7">Installation</h3>
 
 <p>SublimeSocketAsset is already in your project. then,  </p>
 
@@ -376,7 +385,7 @@ Unity Editor &gt; Preferences &gt; General &gt; Auto Refresh is enabled.</p>
 Please see below.</strong><br>
 <a href="http://sassembla.github.io/Public/source/SublimeSocket/How%20to%20install%20SublimeSocket%20for%20Sublime%20Text%20X.html">http://sassembla.github.io/Public/source/SublimeSocket/How to install SublimeSocket for Sublime Text X.html</a>  </p>
 
-<h6 id="toc_7">then -&gt; Turn on SublimeSocket &amp; SublimeSocketAsset</h6>
+<h6 id="toc_8">then -&gt; Turn on SublimeSocket &amp; SublimeSocketAsset</h6>
 
 <p>2.
 In Sublime Text,<br>
@@ -393,7 +402,7 @@ chosse <strong>&quot;connect&quot;</strong><br>
 or<br>
 <strong>[Play] your Project.</strong></p>
 
-<h3 id="toc_8">Sublime Text 3 beta support [experimental]</h3>
+<h3 id="toc_9">Sublime Text 3 beta support [experimental]</h3>
 
 <p>Sublime Text 3 is now supported by SublimeSocketAsset version 1.5.x or later.<br>
 But not yet default setting.  </p>
@@ -413,7 +422,7 @@ Change the number to &quot;3&quot;.  </p>
 <p>Note that Windows7/8 has no notification function.<br>
 The notification function for Windows8 is in the plan.</p>
 
-<h3 id="toc_9">Compile &amp; Show errors on SublimeText</h3>
+<h3 id="toc_10">Compile &amp; Show errors on SublimeText</h3>
 
 <p>1.
 Open project files with SublimeText.</p>
@@ -421,7 +430,7 @@ Open project files with SublimeText.</p>
 <p>2.
 Unity-compile will start when source code will be saved on SublimeText.</p>
 
-<h3 id="toc_10">Play &amp; See runtime-parameter on SublimeText</h3>
+<h3 id="toc_11">Play &amp; See runtime-parameter on SublimeText</h3>
 
 <p>1.
 Write &quot;Debug.Log(SPECIFIC-FORMAT)&quot; to the project&#39;s code.
@@ -433,24 +442,24 @@ In Unity editor, &quot;Play&quot; the project.</p>
 <p>3.
 The result of latest param-parameter will appear on formatted &quot;Debug.Log()&quot; line.</p>
 
-<h6 id="toc_11">The runtime-parameter log specific format</h6>
+<h6 id="toc_12">The runtime-parameter log specific format</h6>
 
 <pre><code>Debug.Log(&quot;L:&quot; + &quot;comment or nothing&quot; + [THE_PARAM_WANT_TO_SEE_VALUE]);</code></pre>
 
-<h3 id="toc_12">Completion</h3>
+<h3 id="toc_13">Completion</h3>
 
-<h5 id="toc_13">sample movie</h5>
+<h5 id="toc_14">sample movie</h5>
 
 <p><a href="https://vimeo.com/71184393">On Windows</a><br>
 <a href="https://vimeo.com/71184153">On Mac</a></p>
 
-<h5 id="toc_14">enable/disable</h5>
+<h5 id="toc_15">enable/disable</h5>
 
 <p>default setting is &quot;ON&quot;.
 If you want to disable completion,<br>
 set &quot;completion&quot;: &quot;off&quot; in Preferences.txt.</p>
 
-<h5 id="toc_15">About completion cache file</h5>
+<h5 id="toc_16">About completion cache file</h5>
 
 <p>this function generates the library-cache that includes the stable classes info.</p>
 
@@ -458,7 +467,7 @@ set &quot;completion&quot;: &quot;off&quot; in Preferences.txt.</p>
 
 <p>Please ignore it in version control.</p>
 
-<h3 id="toc_16">Customize SSA</h3>
+<h3 id="toc_17">Customize SSA</h3>
 
 <p>SSA&#39;s functions are customizable. 
 All behaviours are defined in <strong>./Filter/UnityFilterSource.txt</strong></p>
@@ -498,7 +507,7 @@ All behaviours are defined in <strong>./Filter/UnityFilterSource.txt</strong></p
 
 <p>you can modify/add new patterns and behaviours manually.</p>
 
-<h3 id="toc_17">AutoConnect</h3>
+<h3 id="toc_18">AutoConnect</h3>
 
 <p>SSA will connect Unity editor to SublimeText when Unity editor &quot;boot&quot; and &quot;Play&quot; entered.  </p>
 
@@ -511,13 +520,13 @@ autoConnect-off</code></pre>
 
 <pre><code>change &quot;autoConnect&quot; value in Preferences.txt</code></pre>
 
-<h5 id="toc_18">To connect to WebPlayer-setting Editor</h5>
+<h5 id="toc_19">To connect to WebPlayer-setting Editor</h5>
 
 <p>You need to set policy server setting. see below.</p>
 
 <pre><code>./Filter/WebPlayerPolicyServingFilter.txt</code></pre>
 
-<h3 id="toc_19">What is ./Preferences.txt</h3>
+<h3 id="toc_20">What is ./Preferences.txt</h3>
 
 <p>This file is preference for SublimeSocketAsset.<br>
 Written by SublimeSocketAsset itself.</p>
@@ -551,7 +560,7 @@ autoConnect:
 
 playFlag,breakFlag: not use yet. flag for future function.</code></pre>
 
-<h3 id="toc_20">FAQ &amp; Online Support</h3>
+<h3 id="toc_21">FAQ &amp; Online Support</h3>
 
 <p><a href="https://github.com/sassembla/SublimeSocketAsset-support">SublimeSocketAsset-support</a><br>
 https://github.com/sassembla/SublimeSocketAsset-support</p>

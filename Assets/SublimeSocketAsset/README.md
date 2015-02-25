@@ -22,6 +22,15 @@ please check,
 Unity Editor > Preferences > General > Auto Refresh is enabled.
 
 
+###Mac OS X Yosemite,  
+The Application which is out of focus will slow down forcely. This causes Unity Editor's tick speed down too.  
+SublimeSocketAsset depends on Unity Editor, because of that completion function will speed down too.  
+
+Unity Editor's tick speed will regain when you "Save" your code with SublimeSocketAsset. but will slow down again. 
+
+We'll solve this problem version in ver 2.1.x 
+
+
 ###Free version limitation
 
 * only work for Sublime Text 3.
