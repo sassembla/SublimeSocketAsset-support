@@ -1,5 +1,5 @@
 # SublimeSocketAsset
-ver 2.0.1
+ver 2.0.2
 
 ###Demo movie
 version 1.3.x or later [https://vimeo.com/67494197](https://vimeo.com/67494197)
@@ -22,7 +22,7 @@ please check,
 Unity Editor > Preferences > General > Auto Refresh is enabled.
 
 
-###Mac OS X Yosemite,  
+###problem with Mac OS X Yosemite,  
 The Application which is out of focus will slow down forcely. This causes Unity Editor's tick speed down too.  
 SublimeSocketAsset depends on Unity Editor, because of that completion function will speed down too.  
 
